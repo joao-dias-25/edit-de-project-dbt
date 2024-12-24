@@ -88,7 +88,7 @@ image that will run dbt.
 Build the image
 
 ```
-$ docker build -t edit_de_project_dbt .
+$ docker build -t edit-de-project-dbt .
 ```
 
 The image built from the previous command will contain your `profiles.yml`,
@@ -97,14 +97,14 @@ The image built from the previous command will contain your `profiles.yml`,
 also be copied to the container. You can run it with the following command:
 
 ```
-$ docker run edit_de_project_dbt debug
+$ docker run edit-de-project-dbt debug
 ```
 
 The entrypoint of the container is the command `dbt`. This means that any
 arguments at the end of the `docker run` command will be appended to the `dbt`
 command. The previous command effectively runs `dbt debug` inside the container.
 
-This image can then be uploaded to Artifact Registry and be used in a Cloud Run
+This image can then be pushed to Docker Hub and be used in a Cloud Run
 job. It will automatically find credentials to authenticate with BigQuery in
 that environment. However, to test locally, you need to provide it your local
 credentials. You can do this by mounting your local credentials to the container
@@ -114,5 +114,27 @@ and pointing the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to it.
 $ docker run \
     -v $HOME/.config/gcloud/application_default_credentials.json:/gcloud/application_default_credentials.json \
     -e GOOGLE_APPLICATION_CREDENTIALS=/gcloud/application_default_credentials.json \
-    edit_de_project_dbt debug
+    edit-de-project-dbt debug
+```
+
+## Push Docker image to Docker Hub
+
+To upload the built image to Docker Hub, you first need to create an account
+with Docker Hub. After that, run this command to authenticate using a browser
+window.
+
+```
+$ docker login
+```
+
+Then, you need to build the image with the proper tag.
+
+```
+$ docker build -t <your-docker-hub-username>/edit-de-project-dbt:latest .
+```
+
+Finally, you can push the image to Docker Hub.
+
+```
+$ docker push <your-docker-hub-username>/edit-de-project-dbt:latest
 ```
