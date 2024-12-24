@@ -79,3 +79,40 @@ Run the test model.
 ```
 $ dbt run --select test_model
 ```
+
+## Running with Docker
+
+After installing Docker, you can use the Dockerfile in this repo to build an
+image that will run dbt.
+
+Build the image
+
+```
+$ docker build -t edit_de_project_dbt .
+```
+
+The image built from the previous command will contain your `profiles.yml`,
+`dbt_project.yml` and `packages.yml` files. It will install dbt packages with
+`dbt deps` before running any command. The contents of the `src/` folder will
+also be copied to the container. You can run it with the following command:
+
+```
+$ docker run edit_de_project_dbt debug
+```
+
+The entrypoint of the container is the command `dbt`. This means that any
+arguments at the end of the `docker run` command will be appended to the `dbt`
+command. The previous command effectively runs `dbt debug` inside the container.
+
+This image can then be uploaded to Artifact Registry and be used in a Cloud Run
+job. It will automatically find credentials to authenticate with BigQuery in
+that environment. However, to test locally, you need to provide it your local
+credentials. You can do this by mounting your local credentials to the container
+and pointing the environment variable `GOOGLE_APPLICATION_CREDENTIALS` to it.
+
+```
+$ docker run \
+    -v $HOME/.config/gcloud/application_default_credentials.json:/gcloud/application_default_credentials.json \
+    -e GOOGLE_APPLICATION_CREDENTIALS=/gcloud/application_default_credentials.json \
+    edit_de_project_dbt debug
+```
