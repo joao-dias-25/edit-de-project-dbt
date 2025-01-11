@@ -132,7 +132,7 @@ to build an image to be run by GCP Cloud Run, we want to make sure we build the
 image for the `linux/x86_64` platform.
 
 ```
-$ docker build --platform linux/x86_64 -t <your-docker-hub-username>/edit-de-project-dbt:latest .
+$ docker build -t <your-docker-hub-username>/edit-de-project-dbt:latest .
 ```
 
 Finally, you can push the image to Docker Hub.
