@@ -127,9 +127,7 @@ window.
 $ docker login
 ```
 
-Then, you need to build the image with the proper tag. Also, now that we want
-to build an image to be run by GCP Cloud Run, we want to make sure we build the
-image for the `linux/x86_64` platform.
+Then, you need to build the image with the proper tag.
 
 ```
 $ docker build -t <your-docker-hub-username>/edit-de-project-dbt:latest .
