@@ -5,7 +5,7 @@ edit_de_project:
       type: bigquery
       method: oauth
       project: data-eng-dev-437916
-      dataset: de_project_teachers_gn
+      dataset: data_eng_project_group1_jd
       job_execution_timeout_seconds: 300
       job_retries: 1
       location: EU
@@ -15,7 +15,7 @@ edit_de_project:
       type: bigquery
       method: oauth
       project: data-eng-dev-437916
-      dataset: de_project_teachers
+      dataset: data_eng_project_group1
       job_execution_timeout_seconds: 300
       job_retries: 1
       location: EU
